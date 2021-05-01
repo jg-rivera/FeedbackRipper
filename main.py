@@ -1,6 +1,9 @@
 import openpyxl
 import re
 import json
+
+from feedback_document import FeedbackDocument
+
 from pathlib import Path
 
 
@@ -66,14 +69,11 @@ class Former:
                         continue
                     answers[question_index].append(answer)
 
-            print(f"\n{name}")
+            file_name = name.split('-')[0].strip().replace(' ', '_')
 
-            for answer_index in range(len(answers)):
-                print(questions[answer_index])
-
-                for answer in answers[answer_index]:
-                    print("*", answer)
-
+            doc = FeedbackDocument(f'output/{file_name}-Peer_Evaluation_Results_T2_AY2020_2021.pdf', name, questions, answers)
+            doc.generate()
+            
     def _is_name_column(self, column):
         return "-" in column
 
